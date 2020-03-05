@@ -2,7 +2,7 @@
 # Grupo 16
 # 55373 José Almeida
 # 55375 Diogo Santos
-
+#comentario
 import constants as c
 import datetime
 from Drone import Drone
