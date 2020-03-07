@@ -1,7 +1,6 @@
 # 2019-2020 Programação 1 (LTI)
 # Grupo 16
 # 55373 José Almeida
-# 55375 Diogo Santos
 
 import constants as c
 import datetime
@@ -19,7 +18,7 @@ def readHeader(file_name):
     """
     
     inFile = open(file_name, "r") 
-    inFile.readline() #skips formal indication line
+    inFile.readline() 
     time = inFile.readline().replace("\n", "") #removes leftover \n from ending of lines in text file
     inFile.readline() 
     date = inFile.readline().replace("\n", "")

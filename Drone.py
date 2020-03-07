@@ -89,4 +89,11 @@ class Drone:
         """
         return self._availabilityHour
 
+    def getDataString(self):
+        """
+        
+        """
+        return "{}, {}, {}, {}, {}, {}, {}, {}".format(self._name, self._area, self._weightLimit, self._range, self._distanceTraveled, self._autonomy, self._availabilityDate, self._availabilityHour)
+
+
 
