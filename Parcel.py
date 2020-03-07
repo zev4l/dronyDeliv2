@@ -2,7 +2,7 @@ class Parcel:
     """
  FAZER DOCSTRING SUPERFICIAL E DOCSTRINGS NOS METODOS
     """
-    def __init__(self, name, area, orderDate, orderHour, baseDistance, weight, duration):
+    def __init__(self, name, area, orderDate, orderHour, baseDistance, weight, duration, status=""):
         self._name = name
         self._area = area
         self._orderDate = orderDate
@@ -10,7 +10,16 @@ class Parcel:
         self._baseDistance = baseDistance
         self._weight = weight
         self._duration = duration
+        self._status = status
       
+
+    # Setters
+
+    def setStatus(self, newStatus):
+        """
+
+        """
+        self._status = newStatus
 
     # Getters
     
@@ -50,6 +59,18 @@ class Parcel:
 
         """
         return self._weight
+
+    def getStatus(self):
+        """
+
+        """
+        return self._status
+
+    def getDuration(self):
+        """
+
+        """
+        return self._duration
 
     def getDataString(self):
         """

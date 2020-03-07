@@ -1,8 +1,10 @@
+import datetime as dt
+
 class Drone:
     """
  FAZER DOCSTRING SUPERFICIAL E DOCSTRINGS NOS METODOS
     """
-    def __init__(self, name, area, weightLimit, range, distanceTraveled, autonomy, availabilityDate, availabilityHour):
+    def __init__(self, name, area, weightLimit, range, distanceTraveled, autonomy, availabilityDate, availabilityHour, status = "unused"):
         self._name = name
         self._area = area
         self._weightLimit = weightLimit
@@ -11,6 +13,12 @@ class Drone:
         self._autonomy = autonomy
         self._availabilityDate = availabilityDate
         self._availabilityHour = availabilityHour
+        self._status = status
+
+        # original attributes backup
+
+        self._originalAvailabilityDate = availabilityDate
+        self._originalAvailabilityHour = availabilityHour
 
     # Setters
 
@@ -37,6 +45,12 @@ class Drone:
 
         """
         self._availabilityHour = newAvailabilityHour
+
+    def setStatus(self, newStatus):
+        """
+
+        """
+        self._status = newStatus
 
     # Getters
     
@@ -89,11 +103,37 @@ class Drone:
         """
         return self._availabilityHour
 
+    def getStatus(self):
+        """
+
+        """
+        return self._status
+
+    def getDMYDate(self):
+        """
+
+        """
+        convertedTime = "{}-{}-{}".format(self.getAvailabilityDate()[8:10],self.getAvailabilityDate()[5:7],self.getAvailabilityDate()[0:4])
+        return convertedTime
+
     def getDataString(self):
         """
         
         """
         return "{}, {}, {}, {}, {}, {}, {}, {}".format(self._name, self._area, self._weightLimit, self._range, self._distanceTraveled, self._autonomy, self._availabilityDate, self._availabilityHour)
 
+    # Other Methods
 
+    def getHourAsDatetime(self):
+        """
+    
+        """
+        hour = dt.datetime.strptime(self.getAvailabilityHour(), '%H:%M')
+        return hour
 
+    def getDateAsDatetime(self):
+        """
+        
+        """
+        date = dt.datetime.strptime(self.getAvailabilityDate(), '%Y-%M-%d')
+        return date

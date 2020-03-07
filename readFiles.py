@@ -147,6 +147,5 @@ def FileValidator(droneFileName, parcelFileName):
     if (droneHeaderTime != parcelHeaderTime) or (droneHeaderDate != parcelHeaderDate) or (droneCompany != parcelCompany):
         raise IOError("Input error: inconsistent files {} and {}".format(droneFileName, parcelFileName))
 
-    
 #drones16h00_2019y11m5.txt
 #parcels16h00_2019y11m5.txt

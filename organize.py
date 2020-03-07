@@ -4,7 +4,6 @@
 # 55375 Diogo Santos
 
 import time_kit as t
-import constants as c
 import readFiles as r
 import datetime
 
