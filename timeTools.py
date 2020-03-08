@@ -1,6 +1,7 @@
 # 2019-2020 Programação 1 (LTI)
-# Grupo 16
-# 55373 José Almeida 
+# Grupo 82
+# 55373 José Almeida
+# 54975 Miguel Lages
 
 import datetime
 

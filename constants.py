@@ -1,6 +1,6 @@
 # 2019-2020 Programação 1 (LTI)
-# Grupo 16
-# 55375 Diogo Santos
+# Grupo 82
+# 54975 Miguel Lages
 # 55373 José Almeida
 
 # This module is used for the recording of constants used throughout the application
