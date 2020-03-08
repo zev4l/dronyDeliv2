@@ -1,7 +1,7 @@
 # 2019-2020 Programação 1 (LTI)
-# Grupo 16
+# Grupo 82
 # 55373 José Almeida
-# 55375 Diogo Santos
+# 54975 Miguel Lages
 
 # Main File: being the main file, this is where the functions written in the helper modules and called and were the program's flow is defined.
 
