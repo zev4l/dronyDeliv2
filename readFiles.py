@@ -3,7 +3,6 @@
 # 55373 José Almeida
 # 54975 Miguel Lages
 
-import constants as c
 import datetime
 from Drone import Drone
 from Parcel import Parcel
@@ -83,7 +82,7 @@ def filePointer(sysarg1, sysarg2):
 
     return fileDict
 
-def FileValidator(droneFileName, parcelFileName):
+def fileValidator(droneFileName, parcelFileName):
     """
 
     """

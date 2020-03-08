@@ -17,13 +17,13 @@ from copy import deepcopy
 if __name__ == "__main__":
     arg1 = str(sys.argv[1])
     arg2 = str(sys.argv[2])
-    fileDict = r.fileFinder(arg1, arg2)
+    fileDict = r.filePointer(arg1, arg2)
 
 droneFile = fileDict["droneFile"]
 parcelFile = fileDict["parcelFile"]
 
 
-r.fileValidater(droneFile, parcelFile)
+r.fileValidator(droneFile, parcelFile)
 
 droneList = r.droneLister(droneFile)
 parcelList = r.parcelLister(parcelFile)
