@@ -35,49 +35,21 @@ def droneAssigner(droneList, parcelList):
         else:
             rightDrone = possibleDrone1
 
-        rightDrone.setAutonomy(round((float(rightDrone.getDistanceTraveled()) - (float(parcel.getBaseDistance())*2/1000)), 1))
+        rightDrone.setAutonomy(round((float(rightDrone.getAutonomy()) - (float(parcel.getBaseDistance())*2/1000)), 1))
         rightDrone.setDistanceTraveled(round((float(rightDrone.getDistanceTraveled()) + float(parcel.getBaseDistance())*2/1000),1))
         parcel.setTimeParcelLeft(t.timeMax(rightDrone.getAvailabilityHour(), parcel.getOrderHour()))
+        parcel.setDateParcelLeft(t.dateMax(rightDrone.getAvailabilityDate(), parcel.getOrderDate()))
         rightDrone.setAvailabilityHour(t.updateTime(t.timeMax(rightDrone.getAvailabilityHour(), parcel.getOrderHour()), parcel.getDuration()))
 
         if t.hourToDatetime(rightDrone.getAvailabilityHour())>t.hourToDatetime("20:00"):
+            parcel.setTimeParcelLeft("08:00")
+            parcel.setDateParcelLeft(t.updateDate(parcel.getDateParcelLeft(), 1))
             rightDrone.setAvailabilityHour(t.updateTime("08:00", parcel.getDuration()))
             rightDrone.setAvailabilityDate(t.updateDate(parcel.getOrderDate(), 1))
         rightDrone.setStatus("used")
 
 
-        print(parcel.getTimeParcelLeft())
-
         ComboObject = Combo(rightDrone, parcel)
         ComboList.append(ComboObject)
 
     return ComboList
-
-    
-
-    
-
-        
-
-# ComboList = droneAssigner(r.droneLister("drones16h00_2019y11m5.txt"), r.parcelLister("parcels16h00_2019y11m5.txt"))
-
-# Testing Stuff
-
-# for Combo in ComboList:
-#     print(Combo.getParcel().getDataString(),"---", Combo.getStatus())
-#     if Combo.getDrone()!="":
-#         print(Combo.getDrone().getDataString())
-#     print()
-    
-
-# Testset 1
-#drones11h00_2019y11m5.txt
-#parcels11h00_2019y11m5.txt
-
-# Testset 2
-#drones16h00_2019y11m5.txt
-#parcels16h00_2019y11m5.txt
-
-# Testset 3
-#drones19h30_2019y11m5.txt
-#parcels19h30_2019y11m5.txt

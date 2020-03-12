@@ -6,227 +6,163 @@
 import organize as o
 import constants as c
 import readFiles as r
-import time_kit as t
+import timeTools as t
 import datetime
 from copy import deepcopy
+from FileNames import FileNames
 
 
-def droneFileMaker(fileDict):
-    """
-    Creates new drone file and returns it's name.
-    Requires: fileDict to be a dictionary containing the names of the input files.
-    Returns: the new drone file's name.
+def FileMaker(FileNameCombo):
     """
 
-    originalFile = fileDict["droneFile"]
-
-    date = r.readHeader(originalFile)[c.headerDate]
-    updatedDate = date
-    time = r.readHeader(originalFile)[c.headerTime]
-    updatedTime = str(t.FileNameTimeUpdate(time, 30))
-    
-    if t.FileNameTimestampConverter(updatedTime)>t.FileNameTimestampConverter("23h59"):
-        updatedDate = t.FileNameDateUpdate(date)
-    
-    # simplifying updatedDate
-    
-    
-    if len(date)==9:
-        updatedDay = updatedDate[:1]
-        updatedYear = updatedDate[5:9]
-        updatedMonth = updatedDate[2:4]
-
-    elif len(date)==10:
-        updatedDay = updatedDate[:2]
-        updatedYear = updatedDate[6:10]
-        updatedMonth = updatedDate[3:5]
-
-    updatedFileName = "drones{0}h{1}_{2}y{3}m{4}.txt".format(updatedTime[:2], updatedTime[3:5], updatedYear, updatedMonth, updatedDay)
-    
-    updatedFile = open(updatedFileName, "w")
-    updatedFile.close()
-    
-    return updatedFileName
-
-def timetableFileMaker(fileDict):
-    """
-    Creates timetable file and returns it's name.
-    Requires: fileDict to be a dictionary containing the names of the input files.
-    Returns: the timetable file's name.
     """
 
-    originalFile = fileDict["parcelFile"]
+    droneFileName = FileNameCombo.getDroneFileName()
+    parcelFileName = FileNameCombo.getParcelFileName()
 
-    date = r.readHeader(originalFile)[c.headerDate]
-    time = r.readHeader(originalFile)[c.headerTime]
+    ################################################# CREATING PARCEL FILE
+
+    droneDate = r.readHeader(droneFileName).getDate()
+    updatedDroneDate = droneDate
+    time = r.readHeader(droneFileName).getTime()
+    updatedDroneTime = str(t.updateTime(time, 30))
+
+    if t.hourToDatetime(updatedDroneTime)>t.hourToDatetime("20:00"):
+        updatedDroneTime = "08h00"
+        updatedDroneDate = t.updateDate(droneDate, 1)
+
+    # breaking down dates into separate day, year and month parts
     
-    # simplifying date
     
-    if len(date)==9:
-        Day = date[:1]
-        Year = date[5:9]
-        Month = date[2:4]
+    if updatedDroneDate[1]=="-" or updatedDroneDate[2]=="-":
+        updatedDroneDay = updatedDroneDate.split("-")[0]
+        updatedDroneYear = updatedDroneDate.split("-")[2]
+        updatedDroneMonth = updatedDroneDate.split("-")[1]
 
-    elif len(date)==10:
-        Day = date[:2]
-        Year = date[6:10]
-        Month = date[3:5]
-
-    updatedFileName = "timetable{0}h{1}_{2}y{3}m{4}.txt".format(time[:2], time[3:5], Year, Month, Day)
-    
-    updatedFile = open(updatedFileName, "w")
-    updatedFile.close()
-    
-
-    return updatedFileName
-
-
-
-def headerWriter(newFileType, fileDict, newFileName):
-    """
-    Updates the input file header and writes it on the desired new file.
-    Requires: newFileType argument to be a string and to either be "Drones" or "Timetable". fileDict argument to be a dictionary containing the names of the input files. newFileName to be a string representing the name of the new file that is going to be written on.
-    Ensures: updated header lines are written on the designated new file.
-    """
-
-    originalFile = fileDict["droneFile"]
-    date = r.readHeader(originalFile)[c.headerDate]
-    time = r.readHeader(originalFile)[c.headerTime]
-    updatedTime = time
-    company = r.readHeader(originalFile)[c.headerCompany]
-    if newFileType=="Drones":
-        updatedTime = str(t.FileNameTimeUpdate(time, 30))
-    
-    if t.FileNameTimestampConverter(updatedTime)>t.FileNameTimestampConverter("23h59"):
-        updatedDate = t.FileNameDateUpdate(date)
     else:
-        updatedDate = date
+        updatedDroneDay = updatedDroneDate.split("-")[2]
+        updatedDroneYear = updatedDroneDate.split("-")[0]
+        updatedDroneMonth = updatedDroneDate.split("-")[1]
 
-    newFile = open(newFileName, "a")
-    newFile.write("Time:\n")
-    newFile.write(updatedTime+"\n")
-    newFile.write("Day:\n")
-    newFile.write(updatedDate+"\n")
-    newFile.write("Company:\n")
-    newFile.write(company+"\n")
-    if newFileType=="Drones":
-        newFile.write("Drones:\n")
-    if newFileType=="Timetable":
-        newFile.write("Timeline:\n")
-    newFile.close()
 
-def droneWriter(droneAssignerTuple, newFileName):
+
+    if updatedDroneDay[0] == "0":
+        updatedDroneDay = updatedDroneDay[1]
+
+    # formatting new file's name
+
+    updatedDroneFileName = "drones{0}h{1}_{2}y{3}m{4}.txt".format(updatedDroneTime[:2], updatedDroneTime[3:5], updatedDroneYear, updatedDroneMonth, updatedDroneDay)
+    
+    updatedDroneFile = open(updatedDroneFileName, "w")
+    updatedDroneFile.close()
+
+    ################################################# CREATING PARCEL FILE
+
+    parcelDate = r.readHeader(parcelFileName).getDate()
+    parcelTime = r.readHeader(parcelFileName).getTime()
+
+    # breaking down date into separate day, year and month parts
+    
+    if parcelDate[1]=="-" or parcelDate[2]=="-":
+        updatedParcelDay = parcelDate.split("-")[0]
+        updatedParcelYear = parcelDate.split("-")[2]
+        updatedParcelMonth = parcelDate.split("-")[1]
+
+    else:
+        updatedParcelDay = parcelDate.split("-")[2]
+        updatedParcelYear = parcelDate.split("-")[0]
+        updatedParcelMonth = parcelDate.split("-")[1]
+
+    # formatting new file's name
+
+    updatedParcelFileName = "timetable{0}h{1}_{2}y{3}m{4}.txt".format(parcelTime[:2], parcelTime[3:5], updatedParcelYear, updatedParcelMonth, updatedParcelDay)
+    
+    updatedParcelFile = open(updatedParcelFileName, "w")
+    updatedParcelFile.close()
+    
+    return FileNames(updatedDroneFileName, updatedParcelFileName)
+
+def headerWriter(originalFileNames, newFileNames):
     """
-    Writes body of new drone file based on results from o.DroneAssigner().
-    Requires: droneAssignerTuple to be a tuple including the dictionary that has the drone/parcel matches and a list of unassigned drones. newFileName has to be a string representing the name of the file to be written on.
-    Returns: nothing.
+
     """
-    
-    DroneParcelCombo = deepcopy(droneAssignerTuple[0])
-    UnassignedDrones = deepcopy(droneAssignerTuple[2])
-    
-    
-    
-    droneFile = open(newFileName, "a")
+    newFileNameTuple = (newFileNames.getDroneFileName(), newFileNames.getParcelFileName())
+    originalFile = originalFileNames.getDroneFileName()
 
-    valueList = deepcopy(list(DroneParcelCombo.values()))
-    assignedDrones = [item[c.DroneInCombo] for item in valueList]
-    allDrones = assignedDrones + UnassignedDrones
-    allDrones.sort(key=lambda k: (datetime.datetime.strptime(k[c.AvailableDate], '%Y-%M-%d'), datetime.datetime.strptime(k[c.AvailableHour], '%H:%M'), -float(k[c.Autonomy]), k[c.Name]))
-    allDrones.reverse()
-    allDrones = o.duplicateRemover(allDrones)
-    allDrones.reverse() 
-    
-    for drone in allDrones:
-        droneString = str(drone)
-        droneString = droneString.replace("[","")
-        droneString = droneString.replace("'","")
-        droneString = droneString.replace("]","")
-        droneFile.write(droneString + "\n")
+    for fileName in newFileNameTuple:
 
-    droneFile.close()
+        date = r.readHeader(originalFile).getDate()
+        time = r.readHeader(originalFile).getTime()
+        company = r.readHeader(originalFile).getCompany()
 
-    return 
-
-def timetableWriter(droneAssignerTuple, newFileName):
-    """
-    Writes body of timetable file based on results from o.DroneAssigner().
-    Requires: droneAssignerTuple to be a tuple including the dictionary that has the drone/parcel matches, a list of unassigned drones and a list of cancelled orders. newFileName has to be a string representing the name of the file to be written on.
-    Returns: nothing.
-    """
-    parcelFile = open(newFileName, "a")
-    DroneParcelCombo = deepcopy(droneAssignerTuple[0])
-    CancelledOrders = deepcopy(droneAssignerTuple[1])
-    valueList = deepcopy(list(DroneParcelCombo.values()))
-    assignedDrones = [item[c.DroneInCombo] for item in valueList] # creates a list of assigned drones based on the values from the DroneParcelCombo dictionary
-    DroneParcelCombo_Specified = {}
-    updatedParcels = []
-    writtenDrones = [] # list to keep track of the assigned drones that have been written in the timetable file. Updates with each line written
-    CancelledOrders.sort(key=lambda k: (k[c.OrderName])) # sorts cancelled orders by their name
-    if len(CancelledOrders)>0:
-        for order in CancelledOrders:
-            orderDate = order[c.OrderDate].replace(" ","")
-            orderHour = order[c.OrderHour]
-            orderName = order[c.OrderName]
-            parcelFile.write("{0}, {1}, {2}, cancelled\n".format(orderDate, orderHour, orderName))
-    
-    valueList = deepcopy(list(DroneParcelCombo.values()))
-    Parcels = [item[c.ParcelInCombo] for item in valueList] # creates list of parcels based on the values from the DroneParcelCombo dictionary.
-    Parcels.sort(key=lambda k: (datetime.datetime.strptime(k[c.OrderDate].replace(" ",""), '%Y-%M-%d'), datetime.datetime.strptime(k[c.OrderHour], '%H:%M'), k[c.OrderName])) 
-    
-    for parcel, drone in valueList:
-        DroneParcelCombo_Specified[parcel[c.OrderName]] = drone[c.Name] # creates simpler dictionary that includes only the parcel's client name and assigned drone
-    
-    
-    assignedDroneNames = [item[c.Name] for item in assignedDrones]
-    for order in Parcels:
-        orderDate = order[c.OrderDate].replace(" ","")
-        orderHour = order[c.OrderHour]
-        orderName = order[c.OrderName]
-        orderDrone = DroneParcelCombo_Specified[order[c.OrderName]]
-        orderDuration = order[c.OrderDuration]
-
-        # the following block of code serves the purpose of understanding if a given drone has been used more than once, in order to write the correct parcel departure hour and date in the timetable file
-
-        if (assignedDroneNames.count(orderDrone) > 1) and (orderDrone in writtenDrones):
-            assignedDrones.sort(key = lambda k: (datetime.datetime.strptime(k[c.AvailableDate], '%Y-%M-%d'), datetime.datetime.strptime(k[c.AvailableHour], '%H:%M')))
-            assignedDroneNames = [item[c.Name] for item in assignedDrones]
-            usedDroneIndex = assignedDroneNames.index(orderDrone)
-            orderHour = assignedDrones[usedDroneIndex][c.AvailableHour]
-            if t.timestampConverter(parcel[c.OrderHour]) > t.timestampConverter(assignedDrones[usedDroneIndex][c.AvailableHour]):
-                orderHour = order[c.OrderHour]
+        # updating time and date to day after if updated drone time is past 20:00
+         
+        if "drone" in fileName:
+            time = t.updateTime(time, 30)
+            if t.hourToDatetime(time)>t.hourToDatetime("20h00"):
+                time = "08h00"
+                date = t.updateDate(date, 1)
         
-        if t.timestampConverter(t.time_update(orderHour, orderDuration)) > t.timestampConverter("20:00"):
-            orderHour = "08:00"
-            orderDate = t.date_update(parcel[c.OrderDate])
-        updatedParcel = []
-        updatedParcel.append(orderDate)
-        updatedParcel.append(orderHour)
-        updatedParcel.append(orderName) 
-        updatedParcel.append(orderDrone)
-        updatedParcels.append(list(updatedParcel))
-        writtenDrones.append(orderDrone)
+        if "drone" in fileName:
+            scope = "Drones:"
+        if "timetable" in fileName:
+            scope = "Timeline:"
 
-    updatedParcels.sort(key= lambda k: (datetime.datetime.strptime(k[c.updatedParcelDate].replace(" ",""), '%Y-%M-%d'), datetime.datetime.strptime(k[c.updatedParcelHour], '%H:%M')))
+        newFile = open(fileName, "a")
+        newFile.write("Time:\n")
+        newFile.write(time+"\n")
+        newFile.write("Day:\n")
+        newFile.write(date+"\n")
+        newFile.write("Company:\n")
+        newFile.write(company+"\n")
+        newFile.write(scope+"\n")
+        newFile.close()
 
-    for order in updatedParcels:
-        
-        order = str(order)
-        order = order.replace("[","")
-        order = order.replace("'","")
-        order = order.replace("]","")
-        parcelFile.write(order + "\n")
+def coreTimetableWriter(ComboList, newFileNames):
+
+    newParcelFile = open(newFileNames.getParcelFileName(), "a")
+
+    ComboList.sort(key=lambda combo: (-(combo.getStatus()=="cancelled"), t.dateToDatetime(combo.getParcel().getDateParcelLeft().strip()), t.hourToDatetime(combo.getParcel().getTimeParcelLeft()), combo.getParcel().getName()))
+
+    for combo in ComboList:
+        if combo.getStatus()=="cancelled":
+            parcelString = "{}, {}, {}, {}".format(combo.getParcel().getOrderDate().strip(), combo.getParcel().getOrderHour(), combo.getParcel().getName(), combo.getStatus())
+            
+        else:
+            parcelString = "{}, {}, {}, {}".format(combo.getParcel().getDateParcelLeft().strip(), combo.getParcel().getTimeParcelLeft(), combo.getParcel().getName(), combo.getDrone().getName())
+
+        newParcelFile.write(parcelString+"\n")
+
+    newParcelFile.close()
     
-    parcelFile.close()
+def coreDroneWriter(droneList, newFileNames):
     
-    return
+    newDroneFile = open(newFileNames.getDroneFileName(), "a")
 
 
+    droneList.sort(key=lambda drone: (t.dateToDatetime(drone.getAvailabilityDate()), t.hourToDatetime(drone.getAvailabilityHour()), -float(drone.getAutonomy()), drone.getName()))
+    
+    for drone in droneList:
+        newDroneFile.write(drone.getDataString()+"\n")
+
+    
+
+    newDroneFile.close()
+    
 
 
-import sys
+originalFileNames = FileNames("drones11h00_2019y11m5.txt", "parcels11h00_2019y11m5.txt")
 
-if __name__ == "__main__":
-    arg1 = str(sys.argv[1])
-    arg2 = str(sys.argv[2])
-    fileDict = r.fileFinder(arg1, arg2)
+newFileNames = FileNames(FileMaker(originalFileNames).getDroneFileName(), FileMaker(originalFileNames).getParcelFileName())
+
+headerWriter(originalFileNames, newFileNames)
+
+droneList = r.droneLister(originalFileNames.getDroneFileName())
+
+parcelList = r.parcelLister(originalFileNames.getParcelFileName())
+
+ComboList = o.droneAssigner(droneList, parcelList)
+
+coreTimetableWriter(ComboList, newFileNames)
+
+coreDroneWriter(droneList, newFileNames)

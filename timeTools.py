@@ -65,6 +65,18 @@ def dateToDatetime(dateString):
     
     return dateDatetime
 
+def dateMax(date1, date2):
+    """
+    
+    """
+
+    date1 = datetime.datetime.strptime(str(date1).strip(), '%Y-%m-%d')
+    date2 = datetime.datetime.strptime(str(date2).strip(), '%Y-%m-%d')
+
+    latter = max((date1, date2))
+    latter = str(latter)[:10]
+
+    return latter
 
 def timeMax(time1, time2):
     """
