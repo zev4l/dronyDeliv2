@@ -90,12 +90,10 @@ def fileValidator(droneFileName, parcelFileName):
     # defining fileNameTime
     droneFileNameTime = droneFileName[6:11]
     parcelFileNameTime = parcelFileName[7:12]
-    print(droneFileNameTime, parcelFileNameTime)
 
     # defining fileNameScope
     droneFileNameScope = droneFileName[0:6]
     parcelFileNameScope = parcelFileName[0:7]
-    print(droneFileNameScope, parcelFileNameScope)
 
     # defining fileNameDate for droneFile
     if len(droneFileName)==25:
@@ -109,28 +107,22 @@ def fileValidator(droneFileName, parcelFileName):
     if len(parcelFileName)==27:
         parcelFileNameDate = "{}-{}-{}".format(parcelFileName[21:23], parcelFileName[18:20] ,parcelFileName[13:17])
 
-    print(droneFileNameDate, parcelFileNameDate)
 
     # defining header details
     droneHeaderTime = readHeader(droneFileName).getTime()
     parcelHeaderTime = readHeader(parcelFileName).getTime()
 
-    print(droneHeaderTime, parcelHeaderTime)
 
     droneHeaderDate = readHeader(droneFileName).getDate()
     parcelHeaderDate = readHeader(parcelFileName).getDate()
 
-    print(droneHeaderDate, parcelHeaderDate)
-
     droneHeaderScope = readHeader(droneFileName).getScope().lower()
     parcelHeaderScope = readHeader(parcelFileName).getScope().lower()
 
-    print(droneHeaderScope, parcelHeaderScope)
 
     droneCompany = readHeader(droneFileName).getCompany()
     parcelCompany = readHeader(parcelFileName).getCompany()
 
-    print(droneCompany, parcelCompany)
 
     # comparing details between drone file name and header
 

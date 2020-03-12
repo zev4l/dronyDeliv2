@@ -37,11 +37,16 @@ def droneAssigner(droneList, parcelList):
 
         rightDrone.setAutonomy(round((float(rightDrone.getDistanceTraveled()) - (float(parcel.getBaseDistance())*2/1000)), 1))
         rightDrone.setDistanceTraveled(round((float(rightDrone.getDistanceTraveled()) + float(parcel.getBaseDistance())*2/1000),1))
+        parcel.setTimeParcelLeft(t.timeMax(rightDrone.getAvailabilityHour(), parcel.getOrderHour()))
         rightDrone.setAvailabilityHour(t.updateTime(t.timeMax(rightDrone.getAvailabilityHour(), parcel.getOrderHour()), parcel.getDuration()))
+
         if t.hourToDatetime(rightDrone.getAvailabilityHour())>t.hourToDatetime("20:00"):
             rightDrone.setAvailabilityHour(t.updateTime("08:00", parcel.getDuration()))
             rightDrone.setAvailabilityDate(t.updateDate(parcel.getOrderDate(), 1))
         rightDrone.setStatus("used")
+
+
+        print(parcel.getTimeParcelLeft())
 
         ComboObject = Combo(rightDrone, parcel)
         ComboList.append(ComboObject)

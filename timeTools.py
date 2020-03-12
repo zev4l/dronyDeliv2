@@ -28,13 +28,14 @@ def updateDate(dateString, timeIncrement):
 
         if dateString[1]=="-" or dateString[2]=="-":
             updatedDate = datetime.datetime.strptime(str(dateString), '%d-%m-%Y') + datetime.timedelta(days=int(timeIncrement))
-            print(updatedDate)
             updatedDate = "{}-{}-{}".format(str(updatedDate)[8:10],str(updatedDate)[5:7],str(updatedDate)[:4])
         else:
             updatedDate = datetime.datetime.strptime(str(dateString), '%Y-%m-%d') + datetime.timedelta(days=int(timeIncrement))
             updatedDate = str(updatedDate)[:10]
-        
 
+        if updatedDate[0]=="0":
+            updatedDate = updatedDate[1:]
+    
         return updatedDate
     
 

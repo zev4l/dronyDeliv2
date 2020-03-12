@@ -27,7 +27,7 @@ def FileMaker(FileNameCombo):
     time = r.readHeader(droneFileName).getTime()
     updatedDroneTime = str(t.updateTime(time, 30))
 
-    if t.hourToDatetime(updatedDroneTime)<t.hourToDatetime("08:00"):
+    if t.hourToDatetime(updatedDroneTime)>t.hourToDatetime("20:00"):
         updatedDroneTime = "08h00"
         updatedDroneDate = t.updateDate(droneDate, 1)
 
@@ -43,6 +43,11 @@ def FileMaker(FileNameCombo):
         updatedDroneDay = updatedDroneDate.split("-")[2]
         updatedDroneYear = updatedDroneDate.split("-")[0]
         updatedDroneMonth = updatedDroneDate.split("-")[1]
+
+
+
+    if updatedDroneDay[0] == "0":
+        updatedDroneDay = updatedDroneDay[1]
 
     # formatting new file's name
 
@@ -77,8 +82,70 @@ def FileMaker(FileNameCombo):
     
     return FileNames(updatedDroneFileName, updatedParcelFileName)
 
+def headerWriter(originalFileNames, newFileNames):
+    """
 
-FileNameCombo = FileNames("drones11h00_2019y11m5.txt", "parcels11h00_2019y11m5.txt")
+    """
+    newFileNameTuple = (newFileNames.getDroneFileName(), newFileNames.getParcelFileName())
+    originalFile = originalFileNames.getDroneFileName()
 
-newFileNameCombo = FileMaker(FileNameCombo).getDroneFileName(), FileMaker(FileNameCombo).getParcelFileName()
+    for fileName in newFileNameTuple:
 
+        date = r.readHeader(originalFile).getDate()
+        time = r.readHeader(originalFile).getTime()
+        company = r.readHeader(originalFile).getCompany()
+
+        # updating time and date to day after if updated drone time is past 20:00
+         
+        if "drone" in fileName:
+            time = t.updateTime(time, 30)
+            if t.hourToDatetime(time)>t.hourToDatetime("20h00"):
+                time = "08h00"
+                date = t.updateDate(date, 1)
+        
+        if "drone" in fileName:
+            scope = "Drones:"
+        if "timetable" in fileName:
+            scope = "Timeline:"
+
+        newFile = open(fileName, "a")
+        newFile.write("Time:\n")
+        newFile.write(time+"\n")
+        newFile.write("Day:\n")
+        newFile.write(date+"\n")
+        newFile.write("Company:\n")
+        newFile.write(company+"\n")
+        newFile.write(scope+"\n")
+        newFile.close()
+
+def coreTimetableWriter(ComboList, newFileNames):
+
+    newParcelFile = open(newFileNames.getParcelFileName(), "a")
+
+    ComboList.sort(key=lambda combo: (-(combo.getStatus()=="cancelled"), t.dateToDatetime(combo.getParcel().getOrderDate().strip()), t.hourToDatetime(combo.getParcel().getTimeParcelLeft()), combo.getParcel().getName()))
+
+    for combo in ComboList:
+        if combo.getStatus()=="cancelled":
+            parcelString = "{}, {}, {}, {}".format(combo.getParcel().getOrderDate().strip(), combo.getParcel().getOrderHour(), combo.getParcel().getName(), combo.getStatus())
+            
+        else:
+            parcelString = "{}, {}, {}, {}".format(combo.getParcel().getOrderDate().strip(), combo.getParcel().getTimeParcelLeft(), combo.getParcel().getName(), combo.getDrone().getName())
+
+        newParcelFile.write(parcelString+"\n")
+
+    newParcelFile.close()
+    
+
+
+    
+
+
+originalFileNames = FileNames("drones11h00_2019y11m5.txt", "parcels11h00_2019y11m5.txt")
+
+newFileNames = FileNames(FileMaker(originalFileNames).getDroneFileName(), FileMaker(originalFileNames).getParcelFileName())
+
+headerWriter(originalFileNames, newFileNames)
+
+ComboList = o.droneAssigner(r.droneLister("drones11h00_2019y11m5.txt"), r.parcelLister("parcels11h00_2019y11m5.txt"))
+
+coreTimetableWriter(ComboList, newFileNames)
