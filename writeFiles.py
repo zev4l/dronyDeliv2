@@ -4,7 +4,6 @@
 # 54975 Miguel Lages
 
 import organize as o
-import constants as c
 import readFiles as r
 import timeTools as t
 import datetime

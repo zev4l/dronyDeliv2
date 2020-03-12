@@ -70,18 +70,6 @@ def parcelLister(fileName):
 # listaDrones = droneLister("drones16h00_2019y11m5.txt")
 # listaParcelas = parcelLister("parcels16h00_2019y11m5.txt")
 
-def filePointer(sysarg1, sysarg2):
-    """
-    Returns a dictionary which includes the file names given as sysarg1 and sysarg2.
-    Requires: sysarg1 and sysarg2 arguments to be strings in order to ensure proper function across program.
-    Ensures: dictionary which includes the name of the drone file and the name of the parcel file.
-    """
-    fileDict= {}
-    fileDict["droneFile"] = sysarg1
-    fileDict["parcelFile"] = sysarg2
-
-    return fileDict
-
 def fileValidator(droneFileName, parcelFileName):
     """
 
