@@ -80,4 +80,5 @@ def FileMaker(FileNameCombo):
 
 FileNameCombo = FileNames("drones11h00_2019y11m5.txt", "parcels11h00_2019y11m5.txt")
 
-print(FileMaker(FileNameCombo).getDroneFileName(), FileMaker(FileNameCombo).getParcelFileName())
+newFileNameCombo = FileMaker(FileNameCombo).getDroneFileName(), FileMaker(FileNameCombo).getParcelFileName()
+
