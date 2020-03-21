@@ -9,17 +9,33 @@ def updateTime(timeString, timeIncrement):
         """
         timeIncrement is minutes and int
         """
-        updatedTime = datetime.datetime.strptime(str(timeString), '%H:%M') + datetime.timedelta(minutes=int(timeIncrement))
-        updatedTime = str(updatedTime)[11:16]
+        if timeString[2]==":":
+            updatedTime = datetime.datetime.strptime(str(timeString), '%H:%M') + datetime.timedelta(minutes=int(timeIncrement))
+            updatedTime = str(updatedTime)[11:16]
+
+        elif timeString[2]=="h":
+            updatedTime = datetime.datetime.strptime(str(timeString), '%Hh%M') + datetime.timedelta(minutes=int(timeIncrement))
+            updatedTime = "{}h{}".format(str(updatedTime)[11:13],str(updatedTime)[14:16])
+        
+
         return updatedTime
 
-def updateDate(timeString, timeIncrement):
+def updateDate(dateString, timeIncrement):
         """
         timeIncrement is days and int
         """
-        timeString = timeString.strip()
-        updatedDate = datetime.datetime.strptime(str(timeString), '%Y-%M-%d') + datetime.timedelta(days=int(timeIncrement))
-        updatedDate = str(updatedDate)[:10]
+        dateString = dateString.strip()
+
+        if dateString[1]=="-" or dateString[2]=="-":
+            updatedDate = datetime.datetime.strptime(str(dateString), '%d-%m-%Y') + datetime.timedelta(days=int(timeIncrement))
+            updatedDate = "{}-{}-{}".format(str(updatedDate)[8:10],str(updatedDate)[5:7],str(updatedDate)[:4])
+        else:
+            updatedDate = datetime.datetime.strptime(str(dateString), '%Y-%m-%d') + datetime.timedelta(days=int(timeIncrement))
+            updatedDate = str(updatedDate)[:10]
+
+        if updatedDate[0]=="0":
+            updatedDate = updatedDate[1:]
+    
         return updatedDate
     
 
@@ -29,17 +45,38 @@ def hourToDatetime(timeString):
     Requires: timestamp_string argument to be a string in the "HOURS:MINUTES" ('%H:%M') format.
     Ensures: returnal of the same timestamp but in  datetime type.
     """
-    hourDatetime = datetime.datetime.strptime(str(timeString), '%H:%M')
+
+    if timeString[2]==":":
+        hourDatetime = datetime.datetime.strptime(str(timeString), '%H:%M')
+
+    if timeString[2]=="h":
+        hourDatetime = datetime.datetime.strptime(str(timeString), '%Hh%M')
 
     return hourDatetime
 
-def dateToDatetime(timesString):
+def dateToDatetime(dateString):
     """
 
     """
-    dateDatetime = datetime.datetime.strptime(str(timesString), '%Y-%M-%d')
+    if dateString[1]=="-" or dateString[2]=="-":
+        dateDatetime = datetime.datetime.strptime(str(dateString), '%d-%m-%Y')
+    else:
+        dateDatetime = datetime.datetime.strptime(str(dateString), '%Y-%m-%d')
+    
     return dateDatetime
 
+def dateMax(date1, date2):
+    """
+    
+    """
+
+    date1 = datetime.datetime.strptime(str(date1).strip(), '%Y-%m-%d')
+    date2 = datetime.datetime.strptime(str(date2).strip(), '%Y-%m-%d')
+
+    latter = max((date1, date2))
+    latter = str(latter)[:10]
+
+    return latter
 
 def timeMax(time1, time2):
     """
@@ -66,3 +103,4 @@ def timeMin(time1, time2):
     earliest = str(earliest)[11:16]
 
     return earliest
+
