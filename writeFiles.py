@@ -150,18 +150,18 @@ def coreDroneWriter(droneList, newFileNames):
     
 
 
-originalFileNames = FileNames("drones11h00_2019y11m5.txt", "parcels11h00_2019y11m5.txt")
+# originalFileNames = FileNames("drones11h00_2019y11m5.txt", "parcels11h00_2019y11m5.txt")
 
-newFileNames = FileNames(FileMaker(originalFileNames).getDroneFileName(), FileMaker(originalFileNames).getParcelFileName())
+# newFileNames = FileNames(FileMaker(originalFileNames).getDroneFileName(), FileMaker(originalFileNames).getParcelFileName())
 
-headerWriter(originalFileNames, newFileNames)
+# headerWriter(originalFileNames, newFileNames)
 
-droneList = r.droneLister(originalFileNames.getDroneFileName())
+# droneList = r.droneLister(originalFileNames.getDroneFileName())
 
-parcelList = r.parcelLister(originalFileNames.getParcelFileName())
+# parcelList = r.parcelLister(originalFileNames.getParcelFileName())
 
-ComboList = o.droneAssigner(droneList, parcelList)
+# ComboList = o.droneAssigner(droneList, parcelList)
 
-coreTimetableWriter(ComboList, newFileNames)
+# coreTimetableWriter(ComboList, newFileNames)
 
-coreDroneWriter(droneList, newFileNames)
+# coreDroneWriter(droneList, newFileNames)

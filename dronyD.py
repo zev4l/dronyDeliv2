@@ -29,6 +29,6 @@ ComboList = o.droneAssigner(droneList, parcelList)
 
 w.coreTimetableWriter(ComboList, newFileNames)
 w.coreDroneWriter(droneList, newFileNames)
-droneList = r.droneLister(droneFile)
-parcelList = r.parcelLister(parcelFile)
+# droneList = r.droneLister(droneFile)
+# parcelList = r.parcelLister(parcelFile)
 
