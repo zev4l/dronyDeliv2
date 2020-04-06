@@ -12,7 +12,7 @@ def droneAssigner(droneList, parcelList):
     """
 
     """
-    ComboList =[]
+    ComboList = []
     
     for parcel in parcelList:
         

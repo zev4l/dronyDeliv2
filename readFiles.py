@@ -14,7 +14,7 @@ def readHeader(fileName):
     """
     Returns a tuple with the date, time and company specified in file.
     Requires: file to be a text file in established format and fileName to be within quotation marks.
-    Ensures: returnal of a tuple in format (date, time, company).
+    Ensures: returnal of a tuple in format (date, time, company, scope).
     """
     
     inFile = open(fileName, "r") 
@@ -67,9 +67,6 @@ def parcelLister(fileName):
     
     return parcelList
 
-# listaDrones = droneLister("drones16h00_2019y11m5.txt")
-# listaParcelas = parcelLister("parcels16h00_2019y11m5.txt")
-
 def fileValidator(droneFileName, parcelFileName):
     """
 
@@ -100,13 +97,11 @@ def fileValidator(droneFileName, parcelFileName):
     droneHeaderTime = readHeader(droneFileName).getTime()
     parcelHeaderTime = readHeader(parcelFileName).getTime()
 
-
     droneHeaderDate = readHeader(droneFileName).getDate()
     parcelHeaderDate = readHeader(parcelFileName).getDate()
 
     droneHeaderScope = readHeader(droneFileName).getScope().lower()
     parcelHeaderScope = readHeader(parcelFileName).getScope().lower()
-
 
     droneCompany = readHeader(droneFileName).getCompany()
     parcelCompany = readHeader(parcelFileName).getCompany()
@@ -126,6 +121,3 @@ def fileValidator(droneFileName, parcelFileName):
 
     if (droneHeaderTime != parcelHeaderTime) or (droneHeaderDate != parcelHeaderDate) or (droneCompany != parcelCompany):
         raise IOError("Input error: inconsistent files {} and {}".format(droneFileName, parcelFileName))
-
-#drones16h00_2019y11m5.txt
-#parcels16h00_2019y11m5.txt

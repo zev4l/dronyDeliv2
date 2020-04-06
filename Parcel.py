@@ -37,6 +37,7 @@ class Parcel:
 
         """
         self._dateParcelLeft = newDateParcelLeft
+        
     # Getters
     
     def getName(self):
