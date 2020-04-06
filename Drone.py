@@ -7,7 +7,8 @@ import datetime as dt
 
 class Drone:
     """
-    Represents a parcel, complete with all the attributes found in the input file, required for the functioning of this program.
+    Represents a drones, complete with all the attributes found in the input file, required for the functioning of this program.
+    After a drone is set, attributes without the corresponding setter methods should NOT be altered.
     """
     def __init__(self, name, area, weightLimit, range, distanceTraveled, autonomy, availabilityDate, availabilityHour, status = "unused"):
         self._name = name
