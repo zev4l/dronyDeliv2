@@ -88,7 +88,7 @@ def headerWriter(originalFileNames, newFileNames):
     Given the names of the original input files and the names of the new files, writes the header for the two new files.
     Requires: originalFileNames is a FileNames object containing the names of the two input files. newFileNames is a 
     FileNames object containing the names of the two new files (drones and timetable).
-    Ensures: 
+    Ensures: a corresponding updated header is written in each of the updated files.
 
     """
     newFileNameTuple = (newFileNames.getDroneFileName(), newFileNames.getParcelFileName())
@@ -124,6 +124,14 @@ def headerWriter(originalFileNames, newFileNames):
         newFile.close()
 
 def coreTimetableWriter(ComboList, newFileNames):
+    """
+    Given the list of Combo objects containing associated drones and parcels and a FileNames object containing the
+    names of the new files, writes the parcel data on the new timetable file.
+    Requires: ComboList is a list containing Combo objects with associated drones and parcels (returned from o.droneAssigner())
+    and newFileNames is a FileNames object containing the names of the new files (returned from FileMaker).
+    Ensures: updated parcel data is written on the new timetable file.
+
+    """
 
     newParcelFile = open(newFileNames.getParcelFileName(), "a")
 
@@ -141,6 +149,14 @@ def coreTimetableWriter(ComboList, newFileNames):
     newParcelFile.close()
     
 def coreDroneWriter(droneList, newFileNames):
+    """
+    Given the list of Combo objects containing associated drones and parcels and a FileNames object containing the
+    names of the new files, writes the drone data on the new drones file.
+    Requires: ComboList is a list containing Combo objects with associated drones and parcels (returned from o.droneAssigner())
+    and newFileNames is a FileNames object containing the names of the new files (returned from FileMaker).
+    Ensures: updated drone data is written on the new drone file.
+
+    """
     
     newDroneFile = open(newFileNames.getDroneFileName(), "a")
 
