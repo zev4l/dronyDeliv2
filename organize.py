@@ -10,13 +10,21 @@ from Combo import Combo
 
 def droneAssigner(droneList, parcelList):
     """
-
+    Decides which drone is best for which parcel based on drone attributes. When picking a drone for a parcel, the following criteria is applied: 
+    The drone must be operating in the same area as the parcel request, must have enough weight capacity to carry the parcel, have enough autonomy
+    to go and return to base. If multiple drones satisfy the criteria, one will be picked based on the following attributes (by this order): 
+    drone available the earliest, if tied, drone with the most autonomy, if tied, drone with least distance travelled, if tied, first drone when
+    sorted by ascending lexicographical order of their name.
+    Requires: droneList is a list containing objects of Drone class. parcelList is a list containing objects of Parcel class.
+    Ensures: delivery of ComboList, which contains Combo objets, associated drones and parcels.
     """
     ComboList = []
     
     for parcel in parcelList:
         
         droneList.sort(key=lambda drone: (drone.getArea() != parcel.getArea(), dt.datetime.strptime(drone.getDMYDate(), '%d-%M-%Y'), dt.datetime.strptime(drone.getAvailabilityHour(), '%H:%M'), -float(drone.getAutonomy()), float(drone.getDistanceTraveled()), drone.getName()))
+
+        # 3 possible drones are picked, which will be compared
 
         possibleDrone1 = droneList[0]
         possibleDrone2 = droneList[1]
@@ -35,11 +43,15 @@ def droneAssigner(droneList, parcelList):
         else:
             rightDrone = possibleDrone1
 
+        # a drone has been selected and it's statistics/attributes are going to be updated based on the parcel's statistics/attributes
+
         rightDrone.setAutonomy(round((float(rightDrone.getAutonomy()) - (float(parcel.getBaseDistance())*2/1000)), 1))
         rightDrone.setDistanceTraveled(round((float(rightDrone.getDistanceTraveled()) + float(parcel.getBaseDistance())*2/1000),1))
         parcel.setTimeParcelLeft(t.timeMax(rightDrone.getAvailabilityHour(), parcel.getOrderHour()))
         parcel.setDateParcelLeft(t.dateMax(rightDrone.getAvailabilityDate(), parcel.getOrderDate()))
         rightDrone.setAvailabilityHour(t.updateTime(t.timeMax(rightDrone.getAvailabilityHour(), parcel.getOrderHour()), parcel.getDuration()))
+
+        # proofing in the eventuality that a parcel can only be delivered past 8pm, said parcel will be delivered the day after
 
         if t.hourToDatetime(rightDrone.getAvailabilityHour())>t.hourToDatetime("20:00"):
             parcel.setTimeParcelLeft("08:00")

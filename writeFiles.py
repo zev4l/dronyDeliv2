@@ -13,7 +13,7 @@ from FileNames import FileNames
 
 def FileMaker(FileNameCombo):
     """
-    requires FileName object
+    
     """
 
     droneFileName = FileNameCombo.getDroneFileName()

@@ -3,6 +3,7 @@
 # 55373 José Almeida
 # 54975 Miguel Lages
 
+# This file is where all the external functions which make up the program are called.
 
 import organize as o
 import readFiles as r

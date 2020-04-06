@@ -1,8 +1,13 @@
+# 2019-2020 Programação II (LTI)
+# Grupo 82
+# 55373 José Almeida
+# 54975 Miguel Lages
+
 import datetime as dt
 
 class Drone:
     """
- FAZER DOCSTRING SUPERFICIAL E DOCSTRINGS NOS METODOS
+    Represents a parcel, complete with all the attributes found in the input file, required for the functioning of this program.
     """
     def __init__(self, name, area, weightLimit, range, distanceTraveled, autonomy, availabilityDate, availabilityHour, status = "unused"):
         self._name = name
@@ -15,7 +20,7 @@ class Drone:
         self._availabilityHour = availabilityHour
         self._status = status
 
-        # original attributes backup
+        # backup of original timestamp attributes 
 
         self._originalAvailabilityDate = availabilityDate
         self._originalAvailabilityHour = availabilityHour
@@ -26,8 +31,8 @@ class Drone:
         """
         Sets the distance travelled by a drone.
 
-        Requires:
-        Ensures:
+        Requires: newDistance is an int or float
+        Ensures: self._distanceTraveled = newDistance
         """
         self._distanceTraveled = newDistance
 
@@ -35,8 +40,8 @@ class Drone:
         """
         Sets the autonomy that the drone has. The distance which the drone can still travel.
 
-        Requires:
-        Ensures:
+        Requires: newAutonomy is an int or float.
+        Ensures: self._autonomy = newAutonomy
         """
         self._autonomy = newAutonomy
 
@@ -44,8 +49,8 @@ class Drone:
         """
         Sets the drone next available date to operate.
 
-        Requires:
-        Ensures:
+        Requires: newAvailabilityDate is a string in the format YYYY-MM-DD
+        Ensures: self._availabilityDate = newAvailabilityDate
         """
         self._availabilityDate = newAvailabilityDate
 
@@ -53,8 +58,8 @@ class Drone:
         """
         Sets the drone next available hour to operate.
 
-        Requires:
-        Ensures:
+        Requires: newAvailabilityHour is a string in the format HH:mm
+        Ensures: self._availabilityHour = newAvailabilityHour
         """
         self._availabilityHour = newAvailabilityHour
 
@@ -62,8 +67,8 @@ class Drone:
         """
         Sets the drone status.
 
-        Requires:
-        Ensures:
+        Requires: newStatus is either "used" or "unused" (default)
+        Ensures: self._status = newStatus
         """
         self._status = newStatus
 
@@ -71,100 +76,69 @@ class Drone:
     
     def getName(self):
         """
-        Gets the name of the drone.
-
-        Requires:
-        Ensures:
+        Returns the name of the drone.
         """
         return self._name
 
     def getArea(self):
         """
-        Gets the area in which the drone operates.
-
-        Requires:
-        Ensures:
+        Returns the area in which the drone operates.
         """
         return self._area
 
     
     def getWeightLimit(self):
         """
-        Gets the max weight which the drone can support.
-
-        Requires:
-        Ensures:
+        Returns the max weight which the drone can support.
         """
         return self._weightLimit
 
     def getRange(self):
         """
-        Gets the max distance which the drone can travel.
-
-        Requires:
-        Ensures:
+        Returns the max distance which the drone can travel.
         """
         return self._range
 
     def getDistanceTraveled(self):
         """
-        Gets the distance already travelled by the drone.
-
-        Requires:
-        Ensures:
+        Returns the distance already travelled by the drone.
         """
         return self._distanceTraveled
 
     def getAutonomy(self):
         """
-        Gets the autonomy of the drone.
-
-        Requires:
-        Ensures:
+        Returns the autonomy of the drone.
         """
         return self._autonomy
 
     def getAvailabilityDate(self):
         """
-        Gets the next available date which the drone can operate.
-
-        Requires:
-        Ensures:
+        Returns the next available date which the drone can operate.
         """
         return self._availabilityDate
 
     def getAvailabilityHour(self):
         """
-        Gets the next available hour which the drone can operate.
-
-        Requires:
-        Ensures:
+        Returns the next available hour which the drone can operate.
         """
         return self._availabilityHour
 
     def getStatus(self):
         """
-        Gets the status of the drone.
-
-        Requires:
-        Ensures:
+        Returns the status of the drone.
         """
         return self._status
 
     def getDMYDate(self):
         """
-        
-        Requires:
-        Ensures:
+        Returns availabilityDate in DD-MM-YYYY format
         """
         convertedTime = "{}-{}-{}".format(self.getAvailabilityDate()[8:10],self.getAvailabilityDate()[5:7],self.getAvailabilityDate()[0:4])
         return convertedTime
 
     def getDataString(self):
         """
-
-        Requires:
-        Ensures:    
+        Returns a compilation of the drone's attributes
         """
         return "{}, {}, {}, {}, {}, {}, {}, {}".format(self._name, self._area, self._weightLimit, self._range, self._distanceTraveled, self._autonomy, self._availabilityDate, self._availabilityHour)
 
@@ -172,18 +146,14 @@ class Drone:
 
     def getHourAsDatetime(self):
         """
-
-        Requires:
-        Ensures:
+        Returns availabilityHour in the form of a datetime object
         """
         hour = dt.datetime.strptime(self.getAvailabilityHour(), '%H:%M')
         return hour
 
     def getDateAsDatetime(self):
         """
-        
-        Requires:
-        Ensures:
+        Returns availabilityDate in the form of a datetime object
         """
         date = dt.datetime.strptime(self.getAvailabilityDate(), '%Y-%M-%d')
         return date
