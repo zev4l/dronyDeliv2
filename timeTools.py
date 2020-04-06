@@ -7,7 +7,9 @@ import datetime
 
 def updateTime(timeString, timeIncrement):
         """
-        timeIncrement is minutes and int
+        Increments an amount of minutes to a string
+        Requires: timeString is a string representing the timestamp and timeIncrement is an integer representing the amount of minutes to increment on the given timestamp.
+        Ensures: returnal of a string representing the updated timestamp.
         """
         if timeString[2]==":":
             updatedTime = datetime.datetime.strptime(str(timeString), '%H:%M') + datetime.timedelta(minutes=int(timeIncrement))
@@ -22,7 +24,9 @@ def updateTime(timeString, timeIncrement):
 
 def updateDate(dateString, timeIncrement):
         """
-        timeIncrement is days and int
+        Increments an amount of days to a string
+        Requires: dateString is a string representing the datestamp and timeIncrement is an integer representing the amount of days to increment on the given datestamp.
+        Ensures: returnal of a string representing the updated datestamp.
         """
         dateString = dateString.strip()
 
@@ -41,9 +45,9 @@ def updateDate(dateString, timeIncrement):
 
 def hourToDatetime(timeString):
     """
-    Receives a timestamp and converts it to datetime type for ease of comparison with other timestamps.
-    Requires: timestamp_string argument to be a string in the "HOURS:MINUTES" ('%H:%M') format.
-    Ensures: returnal of the same timestamp but in  datetime type.
+    Receives a timestamp and converts it to a datetime object for ease of comparison with other timestamps (datetime objects).
+    Requires: timeString argument is a string in the "HOURS:MINUTES" ('%H:%M') format or the "HOURShMINUTES" ('%Hh%M') format.
+    Ensures: returnal of the same timestamp but in the form of a datetime object.
     """
 
     if timeString[2]==":":
@@ -56,6 +60,9 @@ def hourToDatetime(timeString):
 
 def dateToDatetime(dateString):
     """
+    Receives a datestamp and converts it to a datetime object for ease of comparison with other datestamps (datetime objects).
+    Requires: dateString argument is a string in the "DAY-MONTH-YEAR" ('%d-%m-%Y') format or the "YEAR-MONTH-DAY" ('%Y-%m-%d') format.
+    Ensures: returnal of the same timestamp but in the form of a datetime object.
 
     """
     if dateString[1]=="-" or dateString[2]=="-":
@@ -67,7 +74,9 @@ def dateToDatetime(dateString):
 
 def dateMax(date1, date2):
     """
-    
+    Between two datestamps, returns the latter.
+    Requires: date1 and date2 are strings representing datestamps in the "YEAR-MONTH-DAY" ('%Y-%m-%d') format.
+    Ensures: returnal of the latter between the two datestamps as string.
     """
 
     date1 = datetime.datetime.strptime(str(date1).strip(), '%Y-%m-%d')
@@ -80,9 +89,10 @@ def dateMax(date1, date2):
 
 def timeMax(time1, time2):
     """
-    Receives to timestamps and compares them, returning the latest of the two.
-    Require: time1 and time2 arguments must be in the "HOURS:MINUTES" ('%H:%M') format.
-    Ensures: returnal of the latest of the two.
+    Between two timestamps, returns the latter.
+    Requires: time1 and time2 are strings representing timestamps in the "HOURS:MINUTES" ('%H:%M') format.
+    Ensures: returnal of the latter between the two timestamps as string.
+
     """
     time1 = datetime.datetime.strptime(time1, '%H:%M')
     time2 = datetime.datetime.strptime(time2, '%H:%M')
@@ -93,9 +103,9 @@ def timeMax(time1, time2):
 
 def timeMin(time1, time2):
     """
-    Receives to timestamps and compares them, returning the earliest of the two.
-    Require: time1 and time2 arguments must be in the "HOURS:MINUTES" ('%H:%M') format.
-    Ensures: returnal of the earliest of the two.
+    Between two timestamps, returns the earliest.
+    Requires: time1 and time2 are strings representing timestamps in the "HOURS:MINUTES" ('%H:%M') format.
+    Ensures: returnal of the earliest between the two timestamps as string.
     """
     time1 = datetime.datetime.strptime(time1, '%H:%M')
     time2 = datetime.datetime.strptime(time2, '%H:%M')

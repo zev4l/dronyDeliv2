@@ -12,8 +12,8 @@ from Header import Header
 def readHeader(fileName):
     
     """
-    Returns a tuple with the date, time and company specified in file.
-    Requires: file to be a text file in established format and fileName to be within quotation marks.
+    Returns a tuple with the date, time, company and scope specified in input file.
+    Requires: input file is a text file in established format and fileName is a string with the name of the file.
     Ensures: returnal of a tuple in format (date, time, company, scope).
     """
     
@@ -33,6 +33,9 @@ def readHeader(fileName):
  
 def droneLister(fileName):
     """
+    Based on the input file, compiles a list of Drone objects complete with the corresponding attributes for each drone
+    Requires: input file is a text file in established format and fileName is a string with the name of the file.
+    Ensures: returnal of a list with Drone objects corresponding to the drones found in the input files
     """
 
     inFile = open(fileName, "r")
@@ -52,6 +55,9 @@ def droneLister(fileName):
 
 def parcelLister(fileName):
     """
+    Based on the input file, compiles a list of Parcel objects complete with the corresponding attributes for each parcel
+    Requires: input file is a text file in established format and fileName is a string with the name of the file.
+    Ensures: returnal of a list with Parcel objects corresponding to the parcels found in the input files
     """
     inFile = open(fileName, "r")
     fileContent = inFile.readlines()
@@ -69,6 +75,10 @@ def parcelLister(fileName):
 
 def fileValidator(droneFileName, parcelFileName):
     """
+    Validates input files. Comparing the data between each other and the data between their names and their header content.
+    Requires: droneFileName and parcelFileName are, respectively, strings with the file names of the drone input file and the parcel input file
+    Ensures: Errors are raised if the files don't have corresponding names and header content or if the files' headers are incompatible between
+    eachother.
 
     """
 

@@ -13,7 +13,9 @@ from FileNames import FileNames
 
 def FileMaker(FileNameCombo):
     """
-    
+    Creates the files where the updated data will be placed.
+    Requires: FileNameCombo is a FileNames object containing the names of the original input files.
+    Ensures: creation of two new files with the new correct names.
     """
 
     droneFileName = FileNameCombo.getDroneFileName()
@@ -83,6 +85,10 @@ def FileMaker(FileNameCombo):
 
 def headerWriter(originalFileNames, newFileNames):
     """
+    Given the names of the original input files and the names of the new files, writes the header for the two new files.
+    Requires: originalFileNames is a FileNames object containing the names of the two input files. newFileNames is a 
+    FileNames object containing the names of the two new files (drones and timetable).
+    Ensures: 
 
     """
     newFileNameTuple = (newFileNames.getDroneFileName(), newFileNames.getParcelFileName())
@@ -147,21 +153,3 @@ def coreDroneWriter(droneList, newFileNames):
     
 
     newDroneFile.close()
-    
-
-
-# originalFileNames = FileNames("drones11h00_2019y11m5.txt", "parcels11h00_2019y11m5.txt")
-
-# newFileNames = FileNames(FileMaker(originalFileNames).getDroneFileName(), FileMaker(originalFileNames).getParcelFileName())
-
-# headerWriter(originalFileNames, newFileNames)
-
-# droneList = r.droneLister(originalFileNames.getDroneFileName())
-
-# parcelList = r.parcelLister(originalFileNames.getParcelFileName())
-
-# ComboList = o.droneAssigner(droneList, parcelList)
-
-# coreTimetableWriter(ComboList, newFileNames)
-
-# coreDroneWriter(droneList, newFileNames)
