@@ -1,4 +1,4 @@
-# 2019-2020 Programação 1 (LTI)
+# 2019-2020 Programação II (LTI)
 # Grupo 82
 # 55373 José Almeida
 # 54975 Miguel Lages
@@ -51,7 +51,7 @@ def droneAssigner(droneList, parcelList):
         parcel.setDateParcelLeft(t.dateMax(rightDrone.getAvailabilityDate(), parcel.getOrderDate()))
         rightDrone.setAvailabilityHour(t.updateTime(t.timeMax(rightDrone.getAvailabilityHour(), parcel.getOrderHour()), parcel.getDuration()))
 
-        # proofing in the eventuality that a parcel can only be delivered past 8pm, said parcel will be delivered the day after
+        # future proofing in the eventuality that a parcel can only be delivered past 8pm, said parcel will be delivered the day after
 
         if t.hourToDatetime(rightDrone.getAvailabilityHour())>t.hourToDatetime("20:00"):
             parcel.setTimeParcelLeft("08:00")

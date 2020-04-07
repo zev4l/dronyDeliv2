@@ -62,4 +62,10 @@ class Combo:
         """
         return self._status
 
+    def __str__(self):
+        """
+        Returns a printable compilation of the combo's attributes.
+        """
+        return "Drone: {} \nParcel: {} \nStatus: {}".format(self.getDrone().__str__(), self.getParcel().__str__(), self.getStatus())
+
 

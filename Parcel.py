@@ -1,3 +1,8 @@
+# 2019-2020 Programação II (LTI)
+# Grupo 82
+# 55373 José Almeida
+# 54975 Miguel Lages
+
 class Parcel:
     """
     Represents a parcel, complete with all the attributes found in the input file, required for the functioning of this program.
@@ -105,8 +110,8 @@ class Parcel:
         """
         return self._dateParcelLeft
 
-    def getDataString(self):
+    def __str__(self):
         """
-        Returns a compilation of the parcel's attributes
+        Returns printable a compilation of the parcel's attributes
         """
         return "{}, {}, {}, {}, {}, {}, {}".format(self._name, self._area, self._orderDate, self._orderHour, self._baseDistance, self._weight, self._duration)

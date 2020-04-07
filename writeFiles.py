@@ -1,4 +1,4 @@
-# 2019-2020 Programação 1 (LTI)
+# 2019-2020 Programação II (LTI)
 # Grupo 82
 # 55373 José Almeida
 # 54975 Miguel Lages
@@ -95,10 +95,10 @@ def headerWriter(originalFileNames, newFileNames):
     originalFile = originalFileNames.getDroneFileName()
 
     for fileName in newFileNameTuple:
-
-        date = r.readHeader(originalFile).getDate()
-        time = r.readHeader(originalFile).getTime()
-        company = r.readHeader(originalFile).getCompany()
+        header = r.readHeader(originalFile)
+        date = header.getDate()
+        time = header.getTime()
+        company = header.getCompany()
 
         # updating time and date to day after if updated drone time is past 20:00
          
@@ -164,7 +164,7 @@ def coreDroneWriter(droneList, newFileNames):
     droneList.sort(key=lambda drone: (t.dateToDatetime(drone.getAvailabilityDate()), t.hourToDatetime(drone.getAvailabilityHour()), -float(drone.getAutonomy()), drone.getName()))
     
     for drone in droneList:
-        newDroneFile.write(drone.getDataString()+"\n")
+        newDroneFile.write(drone.__str__()+"\n")
 
     
 

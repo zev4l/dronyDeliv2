@@ -1,4 +1,4 @@
-# 2019-2020 Programação 1 (LTI)
+# 2019-2020 Programação II (LTI)
 # Grupo 82
 # 55373 José Almeida
 # 54975 Miguel Lages
@@ -30,4 +30,3 @@ ComboList = o.droneAssigner(droneList, parcelList)
 
 w.coreTimetableWriter(ComboList, newFileNames)
 w.coreDroneWriter(droneList, newFileNames)
-

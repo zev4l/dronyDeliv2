@@ -41,3 +41,9 @@ class Header:
         Returns the scope on the header
         """
         return self._scope
+
+    def __str__(self):
+        """
+        Returns a printable compilation of header info.
+        """
+        return "Date: {} \nTime: {} \nCompany: {} \nScope: {}".format(self.getDate(), self.getTime(), self.getCompany(), self.getScope())

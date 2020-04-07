@@ -137,12 +137,6 @@ class Drone:
         convertedTime = "{}-{}-{}".format(self.getAvailabilityDate()[8:10],self.getAvailabilityDate()[5:7],self.getAvailabilityDate()[0:4])
         return convertedTime
 
-    def getDataString(self):
-        """
-        Returns a compilation of the drone's attributes
-        """
-        return "{}, {}, {}, {}, {}, {}, {}, {}".format(self._name, self._area, self._weightLimit, self._range, self._distanceTraveled, self._autonomy, self._availabilityDate, self._availabilityHour)
-
     # Other Methods
 
     def getHourAsDatetime(self):
@@ -158,3 +152,9 @@ class Drone:
         """
         date = dt.datetime.strptime(self.getAvailabilityDate(), '%Y-%M-%d')
         return date
+
+    def __str__(self):
+        """
+        Returns a printable compilation of the drone's attributes
+        """
+        return "{}, {}, {}, {}, {}, {}, {}, {}".format(self._name, self._area, self._weightLimit, self._range, self._distanceTraveled, self._autonomy, self._availabilityDate, self._availabilityHour)
